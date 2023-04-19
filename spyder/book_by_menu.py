@@ -38,7 +38,7 @@ class BookSpyder():
         self.menu_title_href_pattern = menu_title_href_pattern
         self.chap_content_pattern = chap_content_pattern
 
-        save_folder = os.path.abspath(save_folder)
+        save_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), save_folder))
         check_path(save_folder)              
         self.project_folder = os.path.join(save_folder, project_name)
         check_path(self.project_folder) 
@@ -127,6 +127,7 @@ class BookSpyder():
             for txt_file in all_files:
                 with open(txt_file, 'r') as f1:
                     f.write(f1.read())
+        print(f"文件保存到:{self.project_folder}.txt")
         if not self.remain_every_chap:
             shutil.rmtree(self.project_folder)
 
@@ -157,11 +158,20 @@ cfg3 = {
     'chap_content_pattern':'//div[@id="content"]/text()'
 }
 
+cfg4 = {
+    'project_name': "问道红尘",
+    'menu_url':"https://www.biqooge.com/0_75/",
+    'root' : "https://www.biqooge.com/",
+    'menu_title_pattern':'//div[@id="list"]/dl/dd/a/text()',
+    'menu_title_href_pattern':'//div[@id="list"]/dl/dd/a/@href',
+    'chap_content_pattern':'//div[@id="content"]/text()'
+}
+
 if __name__ == "__main__":
     bs = BookSpyder(
-        save_folder="./content",
-        remain_every_chap=True,
-        **cfg3
+        save_folder="content",
+        remain_every_chap=False,
+        **cfg4
     )
 
 
